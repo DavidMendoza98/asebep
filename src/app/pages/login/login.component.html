@@ -1,0 +1,35 @@
+<section class=" w-full h-screen bg-zinc-800  flex justify-center items-center">
+  <div class="bg-slate-50 border rounded-lg px-8 w-10/12 lg:w-3/12  flex flex-col items-center">
+    <div id="logo">
+      <img src="../../../assets/logoasebep.png" class="mt-2" width="200px" alt="logo_asebep">
+  </div>
+  <div id="formulario">
+      <p class="text-base text-zinc-800 font-light">Por favor ingresa tus credenciales:</p>
+      <form #login = 'ngForm' class="text-white mt-2 mb-5" >
+        
+    <!--E-mail input-->
+    <div class="md:col-span-5 my-2">
+      <label for="institucional" class="text-gray-900 font-light">Correo Institucional:</label>
+      <input type="email" name="institucional" id="institucional" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 text-gray-900" value="" />
+    </div>
+
+    <!--Password input-->
+    <div class="md:col-span-5 my-2">
+      <label for="password" class="text-gray-900 font-light">Contraseña:</label>
+      <input type="password" name="password" id="password" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 text-gray-900 font-extrabold" value="" />
+    </div>
+
+    <!--Sign in button-->
+    <button
+      type="submit"
+      class="mb-3 dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]] inline-block w-full rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+      data-te-ripple-init
+      data-te-ripple-color="light">
+      Entrar
+    </button>
+
+    <a class="text-gray-600 underline font-extralight text-sm">¿Has olvidado tu contraseña?</a>
+  </form>
+</div>
+</div>
+</section>
