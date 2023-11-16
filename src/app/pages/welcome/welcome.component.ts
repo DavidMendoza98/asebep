@@ -13,7 +13,7 @@ export class WelcomeComponent implements OnInit {
   ngOnInit() {
   }
   toLogin(){
-    this.router.navigate(['auth']);
+    this.router.navigate(['myself']);
   }
 
 }

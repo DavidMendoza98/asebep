@@ -1,0 +1,112 @@
+<main class="w-full flex justify-center" *ngIf="view==='all'">
+  <section class="w-10/12 lg:w-2/5 rounded-md mt-5 p-2 flex flex-col">
+    <span class="font-bold text-3xl text-slate-900">Hola {{user.name}}</span>
+    
+    <span class="font-bold text-2xl text-slate-900">Bienvenido</span>
+    
+    <span class="font-light text-sm text-slate-900 p-2">Tus Datos:</span>
+    <span class="font-light text-sm text-slate-900 p-2">Nombre Completo:</span>
+    <span class="font-light text-bold text-slate-900 ">{{user.name}} {{user.lastname}}</span>
+
+    <span class="font-light text-sm text-slate-900 mt-2">Correo Institucional:</span>
+    <span class="font-light text-bold text-slate-900 ">{{user.email}}</span>
+
+    <span class="font-light text-sm text-slate-900 mt-2">Rol:</span>
+    <span class="font-light text-bold text-slate-900 ">Estudiante</span>
+
+    <div class="flex gap-2 mt-2">
+      <button (click)="view='change'" 
+      class="mb-3 dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]] inline-block w-full rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+      data-te-ripple-init data-te-ripple-color="light">
+      <ng-container>
+        Cambiar Contraseña
+      </ng-container> 
+    </button>
+
+    <button (click)="logout()"
+      class="mb-3 dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]] inline-block w-full rounded bg-slate-900 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+      data-te-ripple-init data-te-ripple-color="light">
+      <ng-container >
+        Cerrar Sesión
+      </ng-container> 
+    </button>
+    </div>
+    <div>
+
+
+<div class="relative overflow-x-auto">
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+              <th scope="col" class="px-6 py-3">
+                  Actividad
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Fecha
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Horas
+              </th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <td class="px-6 py-4">
+                Presentación del Sistema Asebep
+            </td>
+              <td class="px-6 py-4">
+                  16-Nov-2023
+              </td>
+              <td class="px-6 py-4">
+                  2
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</div>
+
+    </div>
+  </section>
+</main>
+<main class="w-full flex justify-center" *ngIf="view==='change'">
+  <section class="w-10/12 lg:w-2/5 rounded-md mt-5 p-2 flex flex-col">
+    <span class="font-bold text-3xl text-slate-900">{{user.name}} Puedes cambiar tu contraseña:</span>
+    
+    <form #login='ngForm' [formGroup]="authForm" class="text-white mt-2 mb-5" (ngSubmit)="change()">
+
+    
+
+      <!--Password input-->
+      <div class="md:col-span-5 my-2">
+        <label for="password" class="text-gray-900 font-light">Contraseña Actual:</label>
+        <input formControlName="oldpassword" type="password" name="password" id="password"
+          class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 text-gray-900 font-extrabold" value="" />
+      </div>
+      <!--Password input-->
+      <div class="md:col-span-5 my-2">
+        <label for="password" class="text-gray-900 font-light">Nueva Contraseña:</label>
+        <input formControlName="newpassword" type="password" name="password" id="password"
+          class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 text-gray-900 font-extrabold" value="" />
+      </div>
+      <!--Password input-->
+      <!-- <div class="md:col-span-5 my-2">
+        <label for="password" class="text-gray-900 font-light">Nueva Contraseña:</label>
+        <input formControlName="newpasswordagain" type="password" name="password" id="password"
+          class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 text-gray-900 font-extrabold" value="" />
+      </div> -->
+
+      <!--Sign in button-->
+      <button type="submit"  
+        class="mb-3 dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]] inline-block w-full rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+        data-te-ripple-init data-te-ripple-color="light">
+          Cambiar
+      </button>
+      <button (click)="view = 'all'"
+        class="mb-3 dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]] inline-block w-full rounded bg-slate-800 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+        data-te-ripple-init data-te-ripple-color="light">
+          Cancelar
+      </button>
+    </form>
+    <p class="text-red-600 text-base" *ngIf="error">Ha ocurrido un error vuelva a intentar</p>
+  </section>
+</main>
