@@ -27,8 +27,8 @@ export class LoginComponent implements OnInit {
   }
 
   auth(){
-    //this.isLogging = true;
-    console.log(this.authForm.value);
+    this.isLogging = true;
+    this.error = false;
     this.AuthService.login(<string>this.authForm.value.username,<string>this.authForm.value.password).subscribe(
       {
         next:(response:any)=>{
@@ -42,11 +42,17 @@ export class LoginComponent implements OnInit {
             permissions,
             id
           });
-          this.Router.navigate(['myself']);
+          if(this.AuthService.isAdmin()){
+            this.Router.navigate(['menu']);
+          } else {
+            this.Router.navigate(['myself']);
+          }
+          
         },
         error:(error)=>{
           console.log(error);
           this.error = true;
+          this.isLogging = false;
         }
       }
     )

@@ -1,4 +1,4 @@
-<section class=" w-full h-screen bg-zinc-800  flex justify-center items-center">
+<section class=" w-full h-screen bg-gradient-to-b  from-cyan-700 to-sky-400   flex justify-center items-center">
   <div class="bg-slate-50 border rounded-lg px-8 w-10/12 lg:w-3/12  flex flex-col items-center">
     <div id="logo">
       <img src="../../../assets/logoasebep.png" class="mt-2" width="200px" alt="logo_asebep">
@@ -10,26 +10,26 @@
         <!--E-mail input-->
         <div class="md:col-span-5 my-2">
           <label for="institucional" class="text-gray-900 font-light">Correo Institucional:</label>
-          <input formControlName="username" type="email" name="institucional" id="institucional"
+          <input required formControlName="username" type="email" name="institucional" id="institucional"
             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 text-gray-900" value="" />
         </div>
 
         <!--Password input-->
         <div class="md:col-span-5 my-2">
           <label for="password" class="text-gray-900 font-light">Contraseña:</label>
-          <input formControlName="password" type="password" name="password" id="password"
+          <input required formControlName="password" type="password" name="password" id="password"
             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 text-gray-900 font-extrabold" value="" />
         </div>
 
         <!--Sign in button-->
-        <button type="submit" [disabled]="isLogging"
-          class="mb-3 dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]] inline-block w-full rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+        <button type="submit" [disabled]="isLogging || login.invalid"
+          class="mb-3 disabled:bg-gray-600 disabled:text-white inline-block w-full rounded  px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out  hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] bg-yellow-500 hover:bg-yellow-300"
           data-te-ripple-init data-te-ripple-color="light">
           <ng-container *ngIf="!isLogging">
             Entrar
           </ng-container> 
           <ng-container *ngIf="isLogging">
-            <app-spin></app-spin>
+            <app-spin class="scale-50"></app-spin>
           </ng-container> 
         </button>
 

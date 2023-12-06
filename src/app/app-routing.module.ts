@@ -6,6 +6,8 @@ import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { LoginComponent } from './pages/login/login.component';
 import { AdminComponent } from './pages/admin/admin.component';
 import { MyselfComponent } from './pages/myself/myself.component';
+import { adminCheckGuard } from './guards/admin-check.guard';
+import { MenuComponent } from './pages/menu/menu.component';
 
 
 const routes: Routes = [
@@ -23,12 +25,18 @@ const routes: Routes = [
     path:'admin',
     component:AdminComponent,
     title:'Panel Admin',
-    canActivate:[authGuard]
+    canActivate:[authGuard,adminCheckGuard]
   },
   {
     path:'myself',
     component:MyselfComponent,
-    title:'Mis Perfil',
+    title:'Mis Horas',
+    canActivate:[authGuard]
+  },
+  {
+    path:'menu',
+    component:MenuComponent,
+    title:'Menú Principal',
     canActivate:[authGuard]
   }
 ];

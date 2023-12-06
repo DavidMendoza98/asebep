@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -16,14 +16,16 @@ export class MyselfComponent implements OnInit {
 
   public view:string = 'all';
   public error:boolean = false;
+  public month:Date = new Date(Date.now());
   public authForm = new FormGroup({
-    oldpassword: new FormControl(''),
-    newpassword: new FormControl(''),
-    newpasswordagain: new FormControl(''),
+    oldpassword: new FormControl('',[Validators.min(8),Validators.required]),
+    newpassword: new FormControl('',[Validators.min(8),Validators.required]),
+    newpasswordagain: new FormControl('',[Validators.min(8),Validators.required]),
   });
 
   ngOnInit() {
     this.user = this.AuthService.getUser();
+    
   }
   change(){
 
@@ -53,6 +55,9 @@ export class MyselfComponent implements OnInit {
 
   logout(){
     this.AuthService.logout();
+  }
+  gotoMenu(){
+    this.Router.navigate(['menu']);
   }
 
 }

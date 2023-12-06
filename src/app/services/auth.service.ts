@@ -28,6 +28,12 @@ constructor(private HttpClient:HttpClient,
   public isAutenticate():boolean{
     return this.token !== '' && this.user
   }
+
+  public isAdmin():boolean{
+    if(!this.isAutenticate) return false;
+    if(!this.user) return false;
+    return this.user.permissions.includes('admin');
+  }
   logout(){
     this.token = '';
     this.user = null
