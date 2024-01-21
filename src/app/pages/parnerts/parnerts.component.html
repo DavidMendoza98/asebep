@@ -1,0 +1,362 @@
+<app-header></app-header>
+<main class=" text-center h-screen bg-gradient-to-b  from-cyan-700 to-sky-400 pt-4">
+  <ng-container [ngSwitch]="view">
+    <ng-container *ngSwitchCase="'list'">
+      <span class="text-white  m-2 font-bold text-2xl ">Estudiantes</span>
+      <section class="flex flex-col items-center mt-2">
+        <div *ngIf="!parnertsFromDb else parnertsTable" class="flex flex-col items-center">
+          <app-spin></app-spin>
+          <span class="text-white">Cargando...</span>
+        </div>
+        <ng-template #parnertsTable>
+          <div class=" flex gap-2  overflow-hidden w-11/12 lg:w-1/2">
+            <div class="w-4/5 ">
+              <div class="relative mb-4 flex w-full flex-wrap items-stretch">
+                <input [(ngModel)]="search" ngModel type="search"
+                  class="bg-white relative m-0 block min-w-0 flex-auto rounded border border-solid border-neutral-300  bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
+                  placeholder="→ Buscar por nombre" aria-label="Search" aria-describedby="button-addon2" />
+              </div>
+            </div>
+            <div class="w-1/5">
+              <button (click)="setViewCreate()" type="button"
+                class="inline-block rounded-sm md:rounded-full bg-warning hover:bg-yellow-200 px-6 pb-2 pt-2.5 text-xs font-medium  leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] transition duration-150 ease-in-out  hover:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.3),0_4px_18px_0_rgba(228,161,27,0.2)] focus:bg-warning-600 focus:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.3),0_4px_18px_0_rgba(228,161,27,0.2)] focus:outline-none focus:ring-0 active:bg-warning-700 active:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.3),0_4px_18px_0_rgba(228,161,27,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(228,161,27,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.2),0_4px_18px_0_rgba(228,161,27,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.2),0_4px_18px_0_rgba(228,161,27,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.2),0_4px_18px_0_rgba(228,161,27,0.1)]">
+                <svg fill="#FFFFFF" height="20px" width="20px" version="1.1" id="Layer_1"
+                  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                  viewBox="0 0 493.456 493.456" xml:space="preserve" stroke="#FFFFFF">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <g>
+                      <g>
+                        <path
+                          d="M246.73,0C110.682,0,0.002,110.68,0.002,246.732s110.68,246.724,246.728,246.724s246.724-110.668,246.724-246.724 S382.778,0,246.73,0z M362.398,254.552c0,4.152-3.124,7.604-7.284,7.604h-88.972c-2.12,0-3.98,1.656-3.98,3.772v89.188 c0,4.144-3.264,7.296-7.4,7.296h-15.716c-4.156,0-7.744-3.152-7.744-7.296v-89.188c0-2.116-1.516-3.772-3.644-3.772h-88.8 c-4.152,0-7.804-3.452-7.804-7.604v-15.716c0-4.14,3.652-7.528,7.804-7.528h88.8c2.128,0,3.644-1.724,3.644-3.856v-88.608 c0-4.152,3.584-7.796,7.744-7.796h15.716c4.132,0,7.4,3.644,7.4,7.796v88.608c0,2.132,1.712,3.856,3.856,3.856h89.096 c4.16,0,7.284,3.388,7.284,7.528V254.552z">
+                        </path>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </button>
+
+            </div>
+          </div>
+          <div class=" bg-white rounded-2xl overflow-hidden w-11/12 lg:w-3/4 overflow-x-scroll">
+
+            <nz-table #parnerts [nzData]="parnertsFromDb |filter:search" [nzPageSize]="3">
+              <thead>
+                <tr>
+                  <th>Nombres</th>
+                  <th>Apellidos</th>
+                  <th>Cuenta</th>
+                  <th>Carrera</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of parnerts.data" class="md:h-20">
+                  <td>{{data.name}}</td>
+                  <td>{{data.lastname}}</td>
+                  <td>{{data.account}}</td>
+                  <td>{{data.career.name}}</td>
+                  <td>
+                    <button type="button"
+                    (click)="setPartnertToUpdate(data)"
+                      class="inline-block rounded bg-info px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] transition duration-150 ease-in-out hover:bg-info-600 hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:bg-info-600 focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:outline-none focus:ring-0 active:bg-info-700 active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(84,180,211,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)]">
+                      Ver
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </div>
+        </ng-template>
+      </section>
+    </ng-container>
+    <ng-container *ngSwitchCase="'create'">
+      <section class="flex flex-col items-center">
+        <div class="w-10/12 md:w-2/4 flex flex-col items-center bg-white rounded-md">
+          <span class="text-base font-sans font-bold mt-2 mb-2">Registrar un nuevo estudiante</span>
+          <form 
+          #partners='ngForm' 
+          [formGroup]="parnertForm"
+          (ngSubmit)="onSubmitCreateAction()"
+          >
+
+            <!-- name -->
+            <div class="relative mb-6 border-b-2" data-te-input-wrapper-init>
+              <input type="text"
+              formControlName="name"
+                class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-800 dark:placeholder:text-neutral-800 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                id="exampleInput7" placeholder="Name" />
+              <label for="exampleInput7"
+                class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-800 transition-all duration-200 ease-out -translate-y-[0.9rem] scale-[0.8] peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-800 dark:peer-focus:text-primary">Nombres:
+              </label>
+            </div>
+
+            <!-- Last name -->
+            <div class="relative mb-6 border-b-2" data-te-input-wrapper-init>
+              <input type="text"
+              formControlName="lastname"
+                class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-800 dark:placeholder:text-neutral-800 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                id="exampleInput7" placeholder="Name" />
+              <label for="exampleInput7"
+                class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-800 transition-all duration-200 ease-out -translate-y-[0.9rem] scale-[0.8] peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-800 dark:peer-focus:text-primary">Apellidos:
+              </label>
+            </div>
+
+            <!-- Account number -->
+            <div class="relative mb-6 border-b-2" data-te-input-wrapper-init>
+              <input type="text"
+              formControlName="account"
+                class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-800 dark:placeholder:text-neutral-800 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                id="exampleInput7" placeholder="Name" />
+              <label for="exampleInput7"
+                class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-800 transition-all duration-200 ease-out -translate-y-[0.9rem] scale-[0.8] peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-800 dark:peer-focus:text-primary">Cuenta:
+              </label>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="relative mb-6 border-b-2" data-te-input-wrapper-init>
+              <input type="text"
+                formControlName="phonenumber"
+                class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-800 dark:placeholder:text-neutral-800 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                id="exampleInput7" placeholder="Name" />
+              <label for="exampleInput7"
+                class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-800 transition-all duration-200 ease-out -translate-y-[0.9rem] scale-[0.8] peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-800 dark:peer-focus:text-primary">Número
+                de teléfono:
+              </label>
+            </div>
+
+            <!-- Email -->
+            <div class="relative mb-6 border-b-2" data-te-input-wrapper-init>
+              <input type="email"
+                formControlName="email"
+                class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-800 dark:placeholder:text-neutral-800 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                id="exampleInput7" placeholder="Name" />
+              <label for="exampleInput7"
+                class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-800 transition-all duration-200 ease-out -translate-y-[0.9rem] scale-[0.8] peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-800 dark:peer-focus:text-primary">Correo
+                Institucional:
+              </label>
+            </div>
+
+            <!-- Birthdate -->
+            <div class="relative mb-6 border-b-2" data-te-input-wrapper-init>
+              <input type="date"
+              formControlName="birthdate"
+                class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-800 dark:placeholder:text-neutral-800 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                id="exampleInput7" placeholder="Name" />
+              <label for="exampleInput7"
+                class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-800 transition-all duration-200 ease-out -translate-y-[0.9rem] scale-[0.8] peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-800 dark:peer-focus:text-primary">Correo
+                Cumpleaños:
+              </label>
+            </div>
+
+            <!-- Sex -->
+            <div class="relative mb-6 border-b-2" data-te-input-wrapper-init>
+              <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 ">Sexo:</label>
+              <select  formControlName="sex" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected>Por favor seleccione</option>
+                <option value="F">Femenino</option>
+                <option value="M">Masculino</option>
+              </select>
+            </div>
+
+            <!-- Carreer -->
+           <div formGroupName="career">
+            <div class="relative mb-6 border-b-2" data-te-input-wrapper-init>
+              <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 ">Carrera:</label>
+              <select formControlName="name" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected>Por favor seleccione</option>
+                <option value="Ingeniería en Sistemas">Ingeniería en Sistemas</option>
+                <option value="Ingeniería Ciencias Acuícolas y Recurso Marino Costero">Ingeniería Ciencias Acuícolas y Recurso Marino Costero</option>
+                <option value="Ingeniería Agroindustrial">Ingeniería Agroindustrial</option>
+                <option value="Comercio Internacional con Orientación a la Agroindustria">Comercio Internacional con Orientación a la Agroindustria</option>
+                <option value="Administración y Generación de Empresas">Administración y Generación de Empresas</option>
+                <option value="Pedagogía con orientación a la planificación y administración educativa">Pedagogía con orientación a la planificación y administración educativa</option>
+                <option value="Administración de empresas agropecuarias">Administración de empresas agropecuarias</option>
+              </select>
+            </div>
+           </div>
+
+
+
+
+
+
+            <div class="flex justify-between gap-2 p-3 w-full md:w-2/5">
+              <button (click)="setViewList()" type="button"
+                class="inline-block rounded-full bg-neutral-800 px-6 pb-2 pt-2.5 text-xs font-medium  leading-normal text-neutral-50 shadow-[0_4px_9px_-4px_rgba(51,45,45,0.7)] transition duration-150 ease-in-out hover:bg-neutral-800 hover:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:bg-neutral-800 focus:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:outline-none focus:ring-0 active:bg-neutral-900 active:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] dark:bg-neutral-900 dark:shadow-[0_4px_9px_-4px_#030202] dark:hover:bg-neutral-900 dark:hover:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)] dark:focus:bg-neutral-900 dark:focus:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)] dark:active:bg-neutral-900 dark:active:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)]">
+                Cancelar
+              </button>
+              <button type="submit"
+                class="inline-block rounded-full bg-info px-6 pb-2 pt-2.5 text-xs font-medium  leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] transition duration-150 ease-in-out hover:bg-info-600 hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:bg-info-600 focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:outline-none focus:ring-0 active:bg-info-700 active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(84,180,211,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)]">
+                Registrar
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </ng-container>
+    <ng-container *ngSwitchCase="'update'">
+      <section class="flex flex-col items-center">
+        <div class="w-10/12 md:w-2/4 flex flex-col items-center bg-white rounded-md">
+          <span class="text-base font-sans font-bold mt-2 mb-2">Actualizar datos de: {{parnertForm.value.name}}</span>
+          <form 
+          #partners='ngForm' 
+          [formGroup]="parnertForm"
+          (ngSubmit)="updateDataToDB()"
+          >
+
+            <!-- name -->
+            <div class="relative mb-6 border-b-2" data-te-input-wrapper-init>
+              <input type="text"
+              formControlName="name"
+                class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-800 dark:placeholder:text-neutral-800 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                id="exampleInput7" placeholder="Name" />
+              <label for="exampleInput7"
+                class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-800 transition-all duration-200 ease-out -translate-y-[0.9rem] scale-[0.8] peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-800 dark:peer-focus:text-primary">Nombres:
+              </label>
+            </div>
+
+            <!-- Last name -->
+            <div class="relative mb-6 border-b-2" data-te-input-wrapper-init>
+              <input type="text"
+              formControlName="lastname"
+                class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-800 dark:placeholder:text-neutral-800 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                id="exampleInput7" placeholder="Name" />
+              <label for="exampleInput7"
+                class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-800 transition-all duration-200 ease-out -translate-y-[0.9rem] scale-[0.8] peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-800 dark:peer-focus:text-primary">Apellidos:
+              </label>
+            </div>
+
+            <!-- Account number -->
+            <div class="relative mb-6 border-b-2" data-te-input-wrapper-init>
+              <input type="text"
+              formControlName="account"
+                class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-800 dark:placeholder:text-neutral-800 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                id="exampleInput7" placeholder="Name" />
+              <label for="exampleInput7"
+                class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-800 transition-all duration-200 ease-out -translate-y-[0.9rem] scale-[0.8] peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-800 dark:peer-focus:text-primary">Cuenta:
+              </label>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="relative mb-6 border-b-2" data-te-input-wrapper-init>
+              <input type="text"
+                formControlName="phonenumber"
+                class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-800 dark:placeholder:text-neutral-800 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                id="exampleInput7" placeholder="Name" />
+              <label for="exampleInput7"
+                class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-800 transition-all duration-200 ease-out -translate-y-[0.9rem] scale-[0.8] peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-800 dark:peer-focus:text-primary">Número
+                de teléfono:
+              </label>
+            </div>
+
+            <!-- Email -->
+            <div class="relative mb-6 border-b-2" data-te-input-wrapper-init>
+              <input type="email"
+                formControlName="email"
+                class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-800 dark:placeholder:text-neutral-800 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                id="exampleInput7" placeholder="Name" />
+              <label for="exampleInput7"
+                class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-800 transition-all duration-200 ease-out -translate-y-[0.9rem] scale-[0.8] peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-800 dark:peer-focus:text-primary">Correo
+                Institucional:
+              </label>
+            </div>
+
+            <!-- Birthdate -->
+            <div class="relative mb-6 border-b-2" data-te-input-wrapper-init>
+              <input type="date"
+              formControlName="birthdate"
+                class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-800 dark:placeholder:text-neutral-800 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                id="exampleInput7" placeholder="Name" />
+              <label for="exampleInput7"
+                class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-800 transition-all duration-200 ease-out -translate-y-[0.9rem] scale-[0.8] peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-800 dark:peer-focus:text-primary">Correo
+                Cumpleaños:
+              </label>
+            </div>
+
+            <!-- Sex -->
+            <div class="relative mb-6 border-b-2" data-te-input-wrapper-init>
+              <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 ">Sexo:</label>
+              <select  formControlName="sex" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected>Por favor seleccione</option>
+                <option value="F">Femenino</option>
+                <option value="M">Masculino</option>
+              </select>
+            </div>
+
+            <!-- Carreer -->
+           <div formGroupName="career">
+            <div class="relative mb-6 border-b-2" data-te-input-wrapper-init>
+              <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 ">Carrera:</label>
+              <select formControlName="name" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected>Por favor seleccione</option>
+                <option value="Ingeniería en Sistemas">Ingeniería en Sistemas</option>
+                <option value="Ingeniería Ciencias Acuícolas y Recurso Marino Costero">Ingeniería Ciencias Acuícolas y Recurso Marino Costero</option>
+                <option value="Ingeniería Agroindustrial">Ingeniería Agroindustrial</option>
+                <option value="Comercio Internacional con Orientación a la Agroindustria">Comercio Internacional con Orientación a la Agroindustria</option>
+                <option value="Administración y Generación de Empresas">Administración y Generación de Empresas</option>
+                <option value="Pedagogía con orientación a la planificación y administración educativa">Pedagogía con orientación a la planificación y administración educativa</option>
+                <option value="Administración de empresas agropecuarias">Administración de empresas agropecuarias</option>
+              </select>
+            </div>
+           </div>
+
+
+
+
+
+
+            <div class="flex justify-between gap-2 p-3 w-full md:w-2/5">
+              <button (click)="setViewList()" type="button"
+                class="inline-block rounded-full bg-neutral-800 px-6 pb-2 pt-2.5 text-xs font-medium  leading-normal text-neutral-50 shadow-[0_4px_9px_-4px_rgba(51,45,45,0.7)] transition duration-150 ease-in-out hover:bg-neutral-800 hover:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:bg-neutral-800 focus:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:outline-none focus:ring-0 active:bg-neutral-900 active:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] dark:bg-neutral-900 dark:shadow-[0_4px_9px_-4px_#030202] dark:hover:bg-neutral-900 dark:hover:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)] dark:focus:bg-neutral-900 dark:focus:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)] dark:active:bg-neutral-900 dark:active:shadow-[0_8px_9px_-4px_rgba(3,2,2,0.3),0_4px_18px_0_rgba(3,2,2,0.2)]">
+                Cancelar
+              </button>
+              <button type="submit"
+                class="inline-block rounded-full bg-info px-6 pb-2 pt-2.5 text-xs font-medium  leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] transition duration-150 ease-in-out hover:bg-info-600 hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:bg-info-600 focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:outline-none focus:ring-0 active:bg-info-700 active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(84,180,211,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)]">
+                Registrar
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </ng-container>
+    <ng-container *ngSwitchCase="'detail'">
+      <section class="flex flex-col items-center">
+        <div class="w-10/12 md:w-2/4 p-2 flex flex-col bg-white rounded-md">
+          <div class="w-full flex justify-end">
+            <button (click)="setViewUpdate()" type="button" class="w-auto text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"><svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#6f6f6f"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M21.1213 2.70705C19.9497 1.53548 18.0503 1.53547 16.8787 2.70705L15.1989 4.38685L7.29289 12.2928C7.16473 12.421 7.07382 12.5816 7.02986 12.7574L6.02986 16.7574C5.94466 17.0982 6.04451 17.4587 6.29289 17.707C6.54127 17.9554 6.90176 18.0553 7.24254 17.9701L11.2425 16.9701C11.4184 16.9261 11.5789 16.8352 11.7071 16.707L19.5556 8.85857L21.2929 7.12126C22.4645 5.94969 22.4645 4.05019 21.2929 2.87862L21.1213 2.70705ZM18.2929 4.12126C18.6834 3.73074 19.3166 3.73074 19.7071 4.12126L19.8787 4.29283C20.2692 4.68336 20.2692 5.31653 19.8787 5.70705L18.8622 6.72357L17.3068 5.10738L18.2929 4.12126ZM15.8923 6.52185L17.4477 8.13804L10.4888 15.097L8.37437 15.6256L8.90296 13.5112L15.8923 6.52185ZM4 7.99994C4 7.44766 4.44772 6.99994 5 6.99994H10C10.5523 6.99994 11 6.55223 11 5.99994C11 5.44766 10.5523 4.99994 10 4.99994H5C3.34315 4.99994 2 6.34309 2 7.99994V18.9999C2 20.6568 3.34315 21.9999 5 21.9999H16C17.6569 21.9999 19 20.6568 19 18.9999V13.9999C19 13.4477 18.5523 12.9999 18 12.9999C17.4477 12.9999 17 13.4477 17 13.9999V18.9999C17 19.5522 16.5523 19.9999 16 19.9999H5C4.44772 19.9999 4 19.5522 4 18.9999V7.99994Z" fill="#6f6f6f"></path> </g></svg></button>
+            <button 
+            nz-popconfirm
+            nzPopconfirmTitle="¿Está seguro de eliminarlo?"
+            nzOkText="Si"
+            nzCancelText="No"
+            (nzOnConfirm)="deleteDataInDB()"
+            type="button" 
+            class="w-auto focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+              <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M9.1709 4C9.58273 2.83481 10.694 2 12.0002 2C13.3064 2 14.4177 2.83481 14.8295 4" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path> <path d="M20.5001 6H3.5" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path> <path d="M18.8332 8.5L18.3732 15.3991C18.1962 18.054 18.1077 19.3815 17.2427 20.1907C16.3777 21 15.0473 21 12.3865 21H11.6132C8.95235 21 7.62195 21 6.75694 20.1907C5.89194 19.3815 5.80344 18.054 5.62644 15.3991L5.1665 8.5" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path> <path d="M9.5 11L10 16" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path> <path d="M14.5 11L14 16" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
+            </button>
+          </div>
+          <span class="text-base font-sans font-bold mt-2 mb-2">{{parnertForm.value.name}} {{parnertForm.value.lastname}}</span>
+          <span class="text-sm font-light">Número de cuenta:</span>
+          <span class="text-base font-sans font-bold mt-2 mb-2">{{parnertForm.value.account}}</span>
+          <span class="text-sm font-light">Correo institucional:</span>
+          <span class="text-base font-sans font-bold mt-2 mb-2">{{parnertForm.value.email}}</span>
+          <span class="text-sm font-light">Número de teléfono:</span>
+          <span class="text-base font-sans font-bold mt-2 mb-2">{{parnertForm.value.phonenumber}}</span>
+          <span class="text-sm font-light">Cumpleaños:</span>
+          <span class="text-base font-sans font-bold mt-2 mb-2">{{parnertForm.value.birthdate}}</span>
+          <span class="text-sm font-light">Sexo:</span>
+          <span class="text-base font-sans font-bold mt-2 mb-2">{{parnertForm.value.sex}}</span>
+          <span class="text-sm font-light">Carrera:</span>
+          <span class="text-base font-sans font-bold mt-2 mb-2">{{parnertForm.value.career.name}}</span>
+          <span class="text-sm font-light">Centro:</span>
+          <span class="text-base font-sans font-bold mt-2 mb-2">{{parnertForm.value.career.entity}}</span>
+          <div class="w-full">
+            <button class="inline-block rounded bg-info px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] transition duration-150 ease-in-out hover:bg-info-600 hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:bg-info-600 focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:outline-none focus:ring-0 active:bg-info-700 active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(84,180,211,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)]" (click)="view='list'">Atrás</button>
+          </div>
+        </div>
+      </section>
+    </ng-container>
+  </ng-container>
+</main>

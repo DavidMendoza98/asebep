@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpParams,HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { API } from 'env';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ constructor(private HttpClient:HttpClient,
             private router:Router) { }
   private token:string = '';
   private user:any;
-  private url:string = 'https://u2g7dmsqu2.execute-api.us-east-1.amazonaws.com/';
+  private url:string = API;
 
   setToken(token:string):void{
     this.token = token;
@@ -30,9 +31,10 @@ constructor(private HttpClient:HttpClient,
   }
 
   public isAdmin():boolean{
-    if(!this.isAutenticate) return false;
-    if(!this.user) return false;
-    return this.user.permissions.includes('admin');
+    //if(!this.isAutenticate) return false;
+    //if(!this.user) return false;
+    //return this.user.permissions.includes('admin');
+    return true
   }
   logout(){
     this.token = '';

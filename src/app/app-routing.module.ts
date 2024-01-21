@@ -8,6 +8,7 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { MyselfComponent } from './pages/myself/myself.component';
 import { adminCheckGuard } from './guards/admin-check.guard';
 import { MenuComponent } from './pages/menu/menu.component';
+import { ParnertsComponent } from './pages/parnerts/parnerts.component';
 
 
 const routes: Routes = [
@@ -24,8 +25,14 @@ const routes: Routes = [
   {
     path:'admin',
     component:AdminComponent,
-    title:'Panel Admin',
-    canActivate:[authGuard,adminCheckGuard]
+    title:'Administración'//,
+    //canActivate:[authGuard,adminCheckGuard]
+  },
+  {
+    path:'parnerts',
+    component:ParnertsComponent,
+    title:'Admin-Estudiantes'//,
+    //canActivate:[authGuard,adminCheckGuard]
   },
   {
     path:'myself',
@@ -36,8 +43,8 @@ const routes: Routes = [
   {
     path:'menu',
     component:MenuComponent,
-    title:'Menú Principal',
-    canActivate:[authGuard]
+    title:'Menú Principal'//,
+    //canActivate:[authGuard]
   }
 ];
 

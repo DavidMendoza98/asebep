@@ -1,0 +1,1 @@
+export const API = 'https://u2g7dmsqu2.execute-api.us-east-1.amazonaws.com/';
