@@ -31,10 +31,9 @@ constructor(private HttpClient:HttpClient,
   }
 
   public isAdmin():boolean{
-    //if(!this.isAutenticate) return false;
-    //if(!this.user) return false;
-    //return this.user.permissions.includes('admin');
-    return true
+    if(!this.isAutenticate) return false;
+    if(!this.user) return false;
+    return this.user.permissions.includes('admin');
   }
   logout(){
     this.token = '';
