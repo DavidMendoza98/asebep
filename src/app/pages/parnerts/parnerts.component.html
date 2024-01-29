@@ -78,7 +78,7 @@
           <form 
           #partners='ngForm' 
           [formGroup]="parnertForm"
-          (ngSubmit)="onSubmitCreateAction()"
+          (ngSubmit)="saveDataToDb()"
           >
 
             <!-- name -->
@@ -173,6 +173,15 @@
                 <option value="Administración y Generación de Empresas">Administración y Generación de Empresas</option>
                 <option value="Pedagogía con orientación a la planificación y administración educativa">Pedagogía con orientación a la planificación y administración educativa</option>
                 <option value="Administración de empresas agropecuarias">Administración de empresas agropecuarias</option>
+                <option value="Otra">Otra</option>
+              </select>
+            </div>
+            <div class="relative mb-6 border-b-2" data-te-input-wrapper-init>
+              <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 ">Centro:</label>
+              <select formControlName="entity" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected>Por favor seleccione</option>
+                <option value="CURLP">CURLP</option>
+                <option value="CRAED">CRAED</option>
               </select>
             </div>
            </div>
@@ -298,6 +307,15 @@
                 <option value="Administración y Generación de Empresas">Administración y Generación de Empresas</option>
                 <option value="Pedagogía con orientación a la planificación y administración educativa">Pedagogía con orientación a la planificación y administración educativa</option>
                 <option value="Administración de empresas agropecuarias">Administración de empresas agropecuarias</option>
+                <option value="Otro">Otro</option>
+              </select>
+            </div>
+            <div class="relative mb-6 border-b-2" data-te-input-wrapper-init>
+              <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 ">Centro:</label>
+              <select formControlName="entity" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected>Por favor seleccione</option>
+                <option value="CURLP">CURLP</option>
+                <option value="CRAED">CRAED</option>
               </select>
             </div>
            </div>

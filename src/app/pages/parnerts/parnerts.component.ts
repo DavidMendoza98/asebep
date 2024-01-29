@@ -37,7 +37,7 @@ export class ParnertsComponent implements OnInit, OnDestroy {
       sex: ['', Validators.required],
       career: this.fb.group({
         name: ['', Validators.required],
-        entity: ['CURLP', Validators.required]
+        entity: ['', Validators.required]
       })
     });
 
@@ -112,6 +112,7 @@ export class ParnertsComponent implements OnInit, OnDestroy {
     }
 
     setViewCreate(){
+      this.resetForm();
       this.view = 'create';
     }
     setViewUpdate(){
@@ -121,12 +122,8 @@ export class ParnertsComponent implements OnInit, OnDestroy {
       this.view = 'detail';
     }
     setViewList(){
+      this.resetForm();
       this.view = 'list';
-    }
-
-    onSubmitCreateAction(){
-      this.saveDataToDb();
-      console.log(this.parnertForm.value);
     }
     
 }
